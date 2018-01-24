@@ -18,6 +18,7 @@ def scrape():
     db.collection.insert_one(data)
     return 'Completed Scrapping the Data!'
 
+
 # create route that renders the html template
 @app.route("/")
 def home():

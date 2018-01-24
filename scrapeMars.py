@@ -8,13 +8,12 @@ import pandas as pd
 
 def init_browser():
     executable_path = {'executable_path':'/usr/local/bin/chromedriver'}
-    return Browser('chrome', **executable_path, headless=False)
-
+    return Browser('chrome', **executable_path, headless=True)
 
 def scrape():
+######################## NASA Mars News ######################## 
     browser = init_browser()
 
-######################## NASA Mars News ######################## 
 
     # Visit the site
     url_marsnews = 'https://mars.nasa.gov/news/'
@@ -54,6 +53,8 @@ def scrape():
 
     # Visit the NASA Jet Propultion Laboratory site
     # Jet Propultion Laboratory
+
+    
     url_jplMars = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url_jplMars)
     time.sleep(1)
@@ -76,6 +77,7 @@ def scrape():
 ######################## Mars Weather Tweet######################## 
 
     # Visit the Mars Weather twitter account
+
     url_tweetMars = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(url_tweetMars)
     time.sleep(1)
@@ -98,12 +100,11 @@ def scrape():
 
     # pandas.read_html to parse the table data
     df = pd.read_html(url_marsFacts)[0]
-    df.columns = ['description','value']
+    df.columns = ['Description','Value']
 
     # pandas.to_html to convert the pandas dataframe to HTML
     html_table = df.to_html(header=True,index=False)
     html_table = html_table.replace('\n','')
-
 
 ######################## Mars hemisphere ######################## 
 

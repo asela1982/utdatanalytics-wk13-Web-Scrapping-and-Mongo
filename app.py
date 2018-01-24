@@ -12,9 +12,11 @@ collection = db.mars_scrape
 
 @app.route("/scrape")
 def scrape():
+
+    db.collection.delete_many({})
     data = scrapeMars.scrape()
     db.collection.insert_one(data)
-    return 'Completed scrapping the data!'
+    return 'Completed Scrapping the Data!'
 
 # create route that renders the html template
 @app.route("/")

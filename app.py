@@ -1,15 +1,21 @@
 # import necessary libraries
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 import pymongo
 import scrapeMars 
 
 # create an instance of flask app
 app = Flask(__name__)
 
-
 client = pymongo.MongoClient()
 db = client.astronomy_db
 collection = db.mars
+
+# create route that renders the html template
+@app.route("/")
+def home():
+    data = db.collection.find_one()
+    return render_template('index.html',data=data)
+
 
 @app.route("/scrape")
 def scrape():
@@ -19,14 +25,8 @@ def scrape():
     print(scrappedData)
     db.collection.insert_one(scrappedData)
     print(list(db.collection.find()))
-    return 'Scrapping data completed!'
+    return redirect("http://www.localhost:5000/", code=302)
 
-# create route that renders the html template
-@app.route("/")
-def home():
-
-    data = db.collection.find_one()
-    return render_template('index.html',data=data)
 
 # run as a python script
 if __name__ == "__main__":

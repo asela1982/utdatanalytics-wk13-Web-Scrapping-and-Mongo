@@ -23,8 +23,8 @@ This project involves building a web application which explores information abou
 * Mars Hemisperes Images (https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars)
 
 #### Images from the final app
-![final_app_part1.png](Images/final_app_part1.png)
-![final_app_part2.png](Images/final_app_part2.png)
+![final_app_part1.png](images/final_app_part1.png)
+![final_app_part2.png](images/final_app_part2.png)
 
 #### Todo
 Deploy the web application in AWS

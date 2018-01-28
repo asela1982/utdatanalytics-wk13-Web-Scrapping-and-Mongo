@@ -8,7 +8,7 @@ import pandas as pd
 
 def init_browser():
     executable_path = {'executable_path':'/usr/local/bin/chromedriver'}
-    return Browser('chrome', **executable_path, headless=True)
+    return Browser('chrome', **executable_path, headless=False)
 
 def scrape():
 ######################## NASA Mars News ######################## 
@@ -18,7 +18,7 @@ def scrape():
     # Visit the site
     url_marsnews = 'https://mars.nasa.gov/news/'
     browser.visit(url_marsnews)
-    time.sleep(1)
+    time.sleep(2)
 
     # scrape the page
     html_content = browser.html
@@ -57,12 +57,12 @@ def scrape():
     
     url_jplMars = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url_jplMars)
-    time.sleep(1)
+    time.sleep(2)
 
     # navigate to the full image using splinter
     image = browser.find_by_id('full_image')
     image.click()
-    time.sleep(1)
+    time.sleep(2)
 
     # parse the html and store the results in a beautifulsoup object
     html = browser.html
@@ -80,7 +80,7 @@ def scrape():
 
     url_tweetMars = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(url_tweetMars)
-    time.sleep(1)
+    time.sleep(2)
 
     # parse the html and store the results in a beautifulsoup object
     html = browser.html
@@ -104,8 +104,7 @@ def scrape():
 
     # pandas.to_html to convert the pandas dataframe to HTML
     html_table = df.to_html(header=True,index=False)
-    html_table = html_table.replace('\n','')
-
+ 
 ######################## Mars hemisphere ######################## 
 
     # Visit the USGS Astrogeology site
@@ -117,10 +116,10 @@ def scrape():
     # loop through each link(Hemispere)
     for x in list(range(4)):
         browser.visit(url_usgs)
-        time.sleep(1)
+        time.sleep(2)
         links = browser.find_by_css('div.item > div.description > a')
         links[x].click()
-        time.sleep(1)
+        time.sleep(2)
         html = browser.html
         soup = BeautifulSoup(html,'lxml')
         #splashy > div.wrapper > div.container > div.content > section > h2.title
@@ -134,8 +133,12 @@ def scrape():
 
     scrappedDict = {'marsNews': marsNews,
             'jplImage': featured_image_url,
-            'marsWeatherTweet': first_tweet_text,
-            'marsFactsTable': html_table,
+            'marsWeatherTweet':first_tweet_text,
+            'marsFactsTable':html_table,
             'marsHemispheres':hemisphere_image_urls}
 
     return scrappedDict
+
+
+if __name__ == "__main__":
+    scrape()

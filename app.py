@@ -1,5 +1,5 @@
 # import necessary libraries
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect,  url_for
 import pymongo
 import scrapeMars 
 
@@ -25,7 +25,9 @@ def scrape():
     print(scrappedData)
     db.collection.insert_one(scrappedData)
     print(list(db.collection.find()))
-    return redirect("http://www.localhost:5000/", code=302)
+    return redirect(url_for('home'))
+
+    # return redirect("http://www.localhost:5000/", code=302)
 
 
 # run as a python script
